@@ -84,7 +84,7 @@ Clustering
 .. autosummary::
    :toctree: ./generated
 
-   leiden
+   louvain
 
 
 

@@ -28,7 +28,7 @@ def maynard2020_3k() -> AnnData:
         * basic quality control (min_counts=20k, max_counts=5M, min_genes=1k, max_mitochondrial_fraction=0.2)
         * filtered to 6000 HVG using `sc.pp.highly_variable_genes(..., flavor="seurat_v3")`
         * raw counts processed using scVI, providing sample information as batch key.
-        * cell types manually annotated based on marker genes and leiden clustering and subclustering.
+        * cell types manually annotated based on marker genes and clustering and subclustering.
         * downsampled to 3000 cells.
 
     `adata.X` contains the `log1p` transformed, cpm-normalized raw counts.

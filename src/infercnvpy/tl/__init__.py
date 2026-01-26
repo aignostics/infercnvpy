@@ -1,33 +1,56 @@
 from typing import Union
 
 import numpy as np
+import pandas as pd
 import scanpy as sc
 from anndata import AnnData
 from scanpy import logging
 
+from ._clustering import LouvainCommunityDetection
 from ._copykat import copykat
 from ._infercnv import infercnv
 from ._scores import cnv_score, ithcna, ithgex
 
 
-def leiden(
+def louvain(
     adata: AnnData,
+    resolution: float = 2.0,
+    key_added: str = "cnv_cluster",
     neighbors_key: str = "cnv_neighbors",
-    key_added: str = "cnv_leiden",
-    inplace: bool = True,
     **kwargs,
-):
-    """Perform leiden clustering on the CNV neighborhood graph.
-
-    Thin wrapper around :func:`scanpy.tl.leiden`.
+) -> pd.Categorical | None:
+    """Perform Louvain community detection on CNV neighborhood graph.
+    
+    Parameters
+    ----------
+    adata
+        AnnData object with computed CNV neighbors
+    resolution
+        Resolution parameter for Louvain algorithm. Higher values = more clusters
+    key_added
+        Key to store cluster labels in adata.obs
+    neighbors_key
+        Key for the neighbors connectivity matrix in adata.obsp
+    **kwargs
+        Additional arguments passed to LouvainCommunityDetection
+        
+    Returns
+    -------
+    If inplace, returns None. Otherwise returns cluster labels.
     """
-    return sc.tl.leiden(
-        adata,
-        neighbors_key=neighbors_key,
-        key_added=key_added,
-        copy=not inplace,
-        **kwargs,
-    )
+    connectivity_key = f"{neighbors_key}_connectivities"
+    
+    if connectivity_key not in adata.obsp:
+        raise ValueError(
+            f"{connectivity_key} not found in adata.obsp. "
+            f"Run infercnvpy.pp.neighbors() first."
+        )
+    
+    louvain = LouvainCommunityDetection(resolution=resolution, **kwargs)
+    clusters = louvain.fit_predict(adata.obsp[connectivity_key])
+    
+    adata.obs[key_added] = clusters
+    return None
 
 
 def pca(

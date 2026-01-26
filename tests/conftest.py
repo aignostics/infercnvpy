@@ -32,7 +32,7 @@ def adata_infercnv(request):
     cnv.tl.infercnv(adata)
     cnv.tl.pca(adata)
     cnv.pp.neighbors(adata)
-    cnv.tl.leiden(adata)
+    cnv.tl.louvain(adata)
 
     adata.obsm["X_cnv"] = request.param(adata.obsm["X_cnv"].toarray())
 

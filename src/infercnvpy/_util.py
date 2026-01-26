@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def _ensure_array(a):
     """If a is a matrix, turn it into an array."""
     if isinstance(a, np.matrix):
@@ -22,3 +21,4 @@ def _choose_mtx_rep(adata, use_raw=False, layer=None):
         return adata.raw.X
     else:
         return adata.X
+

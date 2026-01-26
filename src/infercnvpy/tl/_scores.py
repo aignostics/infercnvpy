@@ -13,7 +13,7 @@ from infercnvpy._util import _choose_mtx_rep
 
 def cnv_score(
     adata: AnnData,
-    groupby: str = "cnv_leiden",
+    groupby: str = "cnv_cluster",
     *,
     use_rep: str = "cnv",
     key_added: str = "cnv_score",
@@ -33,9 +33,7 @@ def cnv_score(
     adata
         annotated data matrix
     groupby
-        Key under which the clustering is stored in adata.obs. Usually
-        the result of :func:`infercnvpy.tl.leiden`, but could also be
-        other grouping information, e.g. sample or patient information.
+        Key under which the clustering is stored in adata.obs. 
     use_rep
         Key under which the result of :func:`infercnvpy.tl.infercnv` is stored
         in adata.
@@ -60,8 +58,8 @@ def cnv_score(
         )
         groupby = obs_key
 
-    if groupby not in adata.obs.columns and groupby == "cnv_leiden":
-        raise ValueError("`cnv_leiden` not found in `adata.obs`. Did you run `tl.leiden`?")
+    if groupby not in adata.obs.columns and groupby == "cnv_cluster":
+        raise ValueError("`cnv_cluster` not found in `adata.obs`. Did you run clustering on the CNV neighborhood graph?")
     cluster_score = {
         cluster: np.mean(np.abs(adata.obsm[f"X_{use_rep}"][adata.obs[groupby].values == cluster, :]))
         for cluster in adata.obs[groupby].unique()

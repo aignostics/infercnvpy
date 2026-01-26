@@ -156,7 +156,8 @@ def infercnv(
 
         if calculate_gene_values:
             adata.layers[f"gene_values_{key_added}"] = per_gene_mtx
-
+        
+        return None
     else:
         return chr_pos, res, per_gene_mtx
 

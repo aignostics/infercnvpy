@@ -11,7 +11,7 @@ from scipy.sparse import issparse
 def chromosome_heatmap(
     adata: AnnData,
     *,
-    groupby: str = "cnv_leiden",
+    groupby: str = "cnv_cluster",
     use_rep: str = "cnv",
     cmap: str | Colormap = "bwr",
     figsize: tuple[int, int] = (16, 10),
@@ -30,7 +30,7 @@ def chromosome_heatmap(
     groupby
         group the cells by a categorical variable from adata.obs. It usually makes
         sense to either group by unsupervised clustering obtained from
-        :func:`infercnvpy.tl.leiden` (the default) or a cell-type label.
+        :func:`infercnvpy.tl.louvain` (the default) or a cell-type label.
     use_rep
         Key under which the result from :func:`infercnvpy.tl.infercnv` are stored.
     cmap
@@ -50,8 +50,8 @@ def chromosome_heatmap(
     If `show` is False, a dictionary of axes.
 
     """
-    if groupby == "cnv_leiden" and "cnv_leiden" not in adata.obs.columns:
-        raise ValueError("'cnv_leiden' is not in `adata.obs`. Did you run `tl.leiden()`?")
+    if groupby == "cnv_cluster" and "cnv_cluster" not in adata.obs.columns:
+        raise ValueError("'cnv_cluster' is not in `adata.obs`. Did you run `tl.louvain()`?")
     tmp_adata = AnnData(X=adata.obsm[f"X_{use_rep}"], obs=adata.obs, uns=adata.uns)
 
     # re-sort, as saving & loading anndata destroys the order
@@ -95,7 +95,7 @@ def chromosome_heatmap(
 def chromosome_heatmap_summary(
     adata: AnnData,
     *,
-    groupby: str = "cnv_leiden",
+    groupby: str = "cnv_cluster",
     use_rep: str = "cnv",
     cmap: str | Colormap = "bwr",
     figsize: tuple[int, int] = (16, 10),
@@ -114,7 +114,7 @@ def chromosome_heatmap_summary(
     groupby
         group the cells by a categorical variable from adata.obs. It usually makes
         sense to either group by unsupervised clustering obtained from
-        :func:`infercnvpy.tl.leiden` (the default) or a cell-type label.
+        :func:`infercnvpy.tl.louvain` (the default) or a cell-type label.
     use_rep
         Key under which the result from :func:`infercnvpy.tl.infercnv` are stored.
     cmap
@@ -134,8 +134,8 @@ def chromosome_heatmap_summary(
     If `show` is False, a dictionary of axes.
 
     """
-    if groupby == "cnv_leiden" and "cnv_leiden" not in adata.obs.columns:
-        raise ValueError("'cnv_leiden' is not in `adata.obs`. Did you run `tl.leiden()`?")
+    if groupby == "cnv_cluster" and "cnv_cluster" not in adata.obs.columns:
+        raise ValueError("'cnv_cluster' is not in `adata.obs`. Did you run the tl.louvain()?")
 
     # TODO this dirty hack repeats each row 10 times, since scanpy
     # heatmap cannot really handle it if there's just one observation

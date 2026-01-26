@@ -97,7 +97,6 @@ intersphinx_mapping = {
     "h5py": ("https://docs.h5py.org/en/stable/", None),
     "cycler": ("https://matplotlib.org/cycler/", None),
     "ipython": ("https://ipython.readthedocs.io/en/stable/", None),
-    "leidenalg": ("https://leidenalg.readthedocs.io/en/latest/", None),
     "matplotlib": ("https://matplotlib.org/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
