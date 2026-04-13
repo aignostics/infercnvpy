@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import pyreadr
+import rdata
 from anndata import AnnData
 from scanpy import logging
 
@@ -85,11 +85,11 @@ def read_scevan(
     else:
         tumor_normal_call = None
         logging.warning("No `scevan_res_table` specified. Will not add tumor/normal classification.")
-    scevan_res = pyreadr.read_r(scevan_res_file[0])["CNA_mtx_relat"].T
-    scevan_anno = pyreadr.read_r(scevan_anno_file[0])["count_mtx_annot"]
+    scevan_res = rdata.read_rda(scevan_res_file[0])["CNA_mtx_relat"].T
+    scevan_anno = rdata.read_rda(scevan_anno_file[0])["count_mtx_annot"]
     scevan_subclone_res = None
     if subclones and len(scevan_subclones_file):
-        scevan_subclone_res = pyreadr.read_r(scevan_subclones_file[0])["results.com"].T
+        scevan_subclone_res = rdata.read_rda(scevan_subclones_file[0])["results.com"].T
 
     if not inplace:
         adata = adata.copy()
