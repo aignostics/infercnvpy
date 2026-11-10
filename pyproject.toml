@@ -62,9 +62,6 @@ doc = [
     "pandas",
     "setuptools", # required for sphinxcontrib-bibtex
 ]
-copykat = [
-    "rpy2>=3.6.9",
-]
 test = [
     "pytest",
     "coverage",
