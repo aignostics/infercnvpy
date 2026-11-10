@@ -25,10 +25,10 @@ jobs:
         include:
           - os: ubuntu-latest
             python: "3.10"
-            r: release
+            r: "4.6.2"
           - os: ubuntu-latest
             python: "3.12"
-            r: release
+            r: "4.6.2"
 
     env:
       OS: ${{ matrix.os }}
@@ -58,7 +58,7 @@ jobs:
         run: |
           install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
           # TODO: use copykat version from february, latest version seens to have a bug...
-          pak::pkg_install(c('stringr', 'navinlabcode/copykat@674e331cf12ce14b62eaf6459f7c84a82fc4c775'))
+          pak::pkg_install(c('stringr@1.6.0', 'navinlabcode/copykat@674e331cf12ce14b62eaf6459f7c84a82fc4c775'))
         shell: Rscript {0}
 
       - name: Test
