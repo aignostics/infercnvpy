@@ -6,9 +6,11 @@ workflows:
     '.github/workflows/build.yaml':
         - 'actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744'
         - 'actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c'
+        - 'astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86'
     '.github/workflows/release.yaml':
         - 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5'
         - 'actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c'
+        - 'astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86'
         - 'pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e'
     '.github/workflows/test.yaml':
         - 'actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744'
