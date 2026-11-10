@@ -7,13 +7,13 @@ default_stages:
 minimum_pre_commit_version: 2.16.0
 repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v4.0.0-alpha.8
+    rev: f12edd9c7be1c20cfa42420fd0e6df71e42b51ea # frozen: v4.0.0-alpha.8
     hooks:
       - id: prettier
         # doesn't work in combination with jupytext hook yet. See https://github.com/mwouts/jupytext/issues/580
         exclude: "docs/notebooks/.*\\.md"
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.3
+    rev: 9c89adb347f6b973f4905a4be0051eb2ecf85dea # frozen: v0.13.3
     hooks:
       - id: ruff
         types_or: [python, pyi, jupyter]
@@ -21,7 +21,7 @@ repos:
       - id: ruff-format
         types_or: [python, pyi, jupyter]
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # frozen: v6.0.0
     hooks:
       - id: detect-private-key
       - id: check-ast
