@@ -45,6 +45,7 @@ gtf = [
 dev = [
     # CLI for managing the python project
     "pre-commit",
+    "twine>=7.0.0",
 ]
 doc = [
     "docutils>=0.8,!=0.18.*,!=0.19.*",
@@ -159,4 +160,8 @@ skip = [
 ]
 
 [tool.uv.sources]
-gtfparse = { git = "https://github.com/lrauschning/gtfparse.git", rev = "dev" }
+gtfparse = { git = "https://github.com/lrauschning/gtfparse.git", rev = "5a740c9d3d4f7f4663b9aa5b264a708059c9c40f" }
+
+[tool.uv]
+# Wait 5 days before taking a new release, same as the Renovate cooldown
+exclude-newer = "5 days"

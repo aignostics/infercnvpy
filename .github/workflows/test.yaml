@@ -30,9 +30,6 @@ jobs:
             python: "3.10"
           - os: ubuntu-latest
             python: "3.12"
-          - os: ubuntu-latest
-            python: "3.12"
-            pip-flags: "--pre"
 
     env:
       OS: ${{ matrix.os }}
@@ -46,9 +43,11 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Install uv
         uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
+        with:
+          version: "0.13.7"
 
       - name: Install the project
-        run: uv sync --extra dev --extra test --extra gtf
+        run: uv sync --locked --extra dev --extra test --extra gtf
 
       - name: Test
         env:
