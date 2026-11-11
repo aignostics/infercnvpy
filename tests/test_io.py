@@ -1,6 +1,7 @@
 import numpy as np
 import numpy.testing as npt
 import pytest
+import requests
 import scanpy.datasets
 
 from infercnvpy.io import genomic_position_from_biomart, genomic_position_from_gtf
@@ -36,7 +37,11 @@ def test_get_genomic_position_from_gtf(adata, gtf, kwargs, testdata, expected_ge
     ],
 )
 def test_get_genomic_position_from_biomart(adata, kwargs):
-    genomic_position_from_biomart(adata, use_cache=True, **kwargs)
+    try:
+        genomic_position_from_biomart(adata, use_cache=True, **kwargs)
+    except requests.exceptions.RequestException as e:
+        # The test needs the Ensembl BioMart server. Skip it when the server is down or refuses the request.
+        pytest.skip(f"Ensembl BioMart server not available: {e}")
     # those entries that are not null should start with "chr"
     assert all(adata.var["chromosome"].dropna().str.startswith("chr"))
     # start and end are equally populatedj

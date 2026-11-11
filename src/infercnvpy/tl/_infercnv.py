@@ -345,7 +345,7 @@ def _running_mean_by_chromosome(
 
 
 def _running_mean_for_chromosome(chr, expr, var, window_size, step, calculate_gene_values):
-    genes = var.loc[var["chromosome"] == chr].sort_values("start").index.values
+    genes = var.loc[var["chromosome"] == chr].sort_values("start").index.to_numpy()
     tmp_x = expr[:, var.index.get_indexer(genes)]
     x_conv, convolved_gene_values = _running_mean(
         tmp_x, n=window_size, step=step, gene_list=genes, calculate_gene_values=calculate_gene_values
