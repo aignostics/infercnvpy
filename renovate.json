@@ -24,13 +24,9 @@
     "semanticCommits": "enabled",
 
     // Query osv.dev for CVEs in all tracked dependencies and raise immediate fix PRs when a
-    // vulnerability is found. The Dependency Dashboard shows all known CVEs, including ones that
-    // already have an open Renovate PR.
+    // vulnerability is found.
     // https://docs.renovatebot.com/configuration-options/#osvvulnerabilityalerts
     "osvVulnerabilityAlerts": true,
-    // Renovate 44.232.0 moved the flat dependencyDashboard* options into this object.
-    // https://docs.renovatebot.com/configuration-options/#dependencydashboard
-    "dependencyDashboard": { "osvVulnerabilitySummary": "all" },
 
     // A vulnerability fix PR skips the 5-day wait by design, so the fixed version can be hours old.
     // Label it, say so in the body, and keep automerge off, so a person checks the fix before the merge.
@@ -42,7 +38,7 @@
     "vulnerabilityAlerts": {
         "addLabels": ["security"],
         "automerge": false,
-        "prHeader": "> [!IMPORTANT]\n> **Security fix, opened without the 5-day wait**\n>\n> Renovate opened this PR because a published advisory affects the current version. It skipped the [**minimum release age** (`minimumReleaseAge`)](https://docs.renovatebot.com/key-concepts/minimum-release-age/) check, so the fixed version might be younger than 5 days. Read the advisory below, check the release age and the upstream release, then merge by hand.\n>\n> uv still applies its own 5-day wait (`exclude-newer` in `pyproject.toml`), and Renovate does not override it. If the fixed version is younger than 5 days, `uv.lock` in this PR is unchanged or the lock update failed. To take the fix early, add the package to `exclude-newer-package` under `[tool.uv]` in `pyproject.toml`, run `uv lock` and push to this branch. Remove the entry when the version is older than 5 days.\n>\n> This exception is configured in [aignostics/renovate-config](https://github.com/aignostics/renovate-config/blob/main/org-inherited-config.json)."
+        "prHeader": "> [!IMPORTANT]\n> **Security fix, opened without the 5-day wait**\n>\n> Renovate opened this PR because a published advisory affects the current version. It skipped the [**minimum release age** (`minimumReleaseAge`)](https://docs.renovatebot.com/key-concepts/minimum-release-age/) check, so the fixed version might be younger than 5 days. Read the advisory below, check the release age and the upstream release, then merge by hand.\n>\n> uv still applies its own 5-day wait (`exclude-newer` in `pyproject.toml`), and Renovate does not override it. If the fixed version is younger than 5 days, `uv.lock` in this PR is unchanged or the lock update failed. To take the fix early, add the package to `exclude-newer-package` under `[tool.uv]` in `pyproject.toml`, run `uv lock --upgrade-package '<package>==<fixed version>'` and push to this branch. A plain `uv lock` keeps the locked version. Remove the entry when the version is older than 5 days.\n>\n> This exception is configured in [aignostics/renovate-config](https://github.com/aignostics/renovate-config/blob/main/org-inherited-config.json)."
     },
     // Repo rule: the uv paragraph of prHeader is not in the org config. It is here, not in a "Repo
     // rules" section, because vulnerabilityAlerts replaces keys and cannot be split.
@@ -101,6 +97,13 @@
     // turns them on.
     // https://docs.renovatebot.com/configuration-options/#forkprocessing
     "forkProcessing": "enabled",
+
+    // Issues are off in this repo, so Renovate has no place for the Dependency Dashboard that
+    // config:best-practices turns on. The org config also sets osvVulnerabilitySummary in this
+    // object. It is left out, because the summary is part of the dashboard.
+    // Renovate 44.232.0 moved the flat dependencyDashboard* options into this object.
+    // https://docs.renovatebot.com/configuration-options/#dependencydashboard
+    "dependencyDashboard": { "enabled": false },
 
     "packageRules": [
         {
